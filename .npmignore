@@ -1,0 +1,10 @@
+# no coverage at all
+coverage
+# travis is not needed
+.travis.yml
+# neither jest
+jest.config.js
+# who cares about sources?
+src
+# this because reasons
+tsconfig.json
