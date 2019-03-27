@@ -1,14 +1,14 @@
-combus ☏
-========
+combus ☎
+=================
 
-- [combus ☏](#combus-%E2%98%8F)
+- [combus ☎](#combus-%E2%98%8E)
   - [Installation](#installation)
   - [Examples](#examples)
       - [Creating a dependency injection system](#creating-a-dependency-injection-system)
       - [Communicating between bundles](#communicating-between-bundles)
       - [Creating a state machine](#creating-a-state-machine)
 
-A FIFO browser event based communication BUS for JavaScript and TypeScript
+A JavaScript browser event based communication BUS
 
 ## Installation
 
