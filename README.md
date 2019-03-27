@@ -8,7 +8,7 @@ combus ☏
       - [Communicating between bundles](#communicating-between-bundles)
       - [Creating a state machine](#creating-a-state-machine)
 
-Browser event based communication BUS for JavaScript and TypeScript
+A FIFO browser event based communication BUS for JavaScript and TypeScript
 
 ## Installation
 

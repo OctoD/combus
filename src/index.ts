@@ -5,13 +5,28 @@
  * @template T
  */
 export interface IMessage<T = unknown> {
-  payload: T;
-  type: string;
+  /**
+   * Is the event issuer ID
+   * @type {string}
+   * @memberof IMessage
+   */
   issuer: string;
+  /**
+   * Is the event payload
+   * @type {T}
+   * @memberof IMessage
+   */
+  payload: T;
+  /**
+   * Is the event type
+   * @type {string}
+   * @memberof IMessage
+   */
+  type: string;
 }
 
-
 /**
+ * Creates a token issuer
  * @protected
  * @param {string} eventType
  * @returns {string}
@@ -22,6 +37,7 @@ export function createIssuer(eventType: string): string {
 }
 
 /**
+ * Creates a message
  * @protected
  * @template T
  * @param {string} issuer
@@ -39,6 +55,7 @@ export function createMessage<T>(issuer: string, type: string, payload: T): IMes
 }
 
 /**
+ * Dispatches an event with an optional payload
  * @template TResponse
  * @param {string} eventType
  * @param {*} payload
@@ -62,6 +79,8 @@ export function dispatch<TResponse>(eventType: string, payload?: any): Promise<I
 }
 
 /**
+ * Listens for an event. When the event is handled, only the event issuer will be 
+ * notified with the handler returning value
  * @param {string} eventType
  * @param {(message: IMessage<unknown>) => Promise<unknown>} eventHandler
  * @memberof ComBus

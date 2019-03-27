@@ -8,3 +8,5 @@ jest.config.js
 src
 # this because reasons
 tsconfig.json
+# they stink
+__tests__
