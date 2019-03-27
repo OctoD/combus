@@ -31,7 +31,7 @@ import combus from 'combus';
 const injectables = new Map();
 
 combus.listen('getInstance', async message => {
-  const { name, args } = message.body.payload;
+  const { name, args } = message.payload;
 
   if (!injectables.has(name)) {
     return new Error(`Injectable ${name} is not registered`);
@@ -41,7 +41,7 @@ combus.listen('getInstance', async message => {
 });
 
 combus.listen('inject', async message => {
-  const { name, injectable } = message.body.payload;
+  const { name, injectable } = message.payload;
 
   if (injectables.has(name)) {
     return new Error(`Injectable ${name} is already registered`);
@@ -97,8 +97,8 @@ Promise.all([
     args: [1, 2, 3, 4]
   }),
 ]).then([fooMessage, foo2Message] => {
-  const foo = fooMessage.body.payload;
-  const foo2 = foo2Message.body.payload;
+  const foo = fooMessage.payload;
+  const foo2 = foo2Message.payload;
 
   console.log(foo.sum()) // 15
   console.log(foo2.sum()) // 10
@@ -116,7 +116,7 @@ import combus from 'combus';
 const secret = 123;
 
 combus.listen('give-me-your-secret', async message => {
-  return `Hello ${message.body.payload}, the secret is ${secret}`;
+  return `Hello ${message.payload}, the secret is ${secret}`;
 });
 
 // bumdle.2.js
@@ -149,13 +149,13 @@ const state = {
 listen('get', async () => state);
 
 listen('add', async message => {
-  state.todos.push(message.body.payload);
+  state.todos.push(message.payload);
   return state;
 });
 
 listen('toggle', async message => {
   state.todos.forEach(todo => {
-    if (todo.id !== message.body.payload) {
+    if (todo.id !== message.payload) {
       return;
     }
 
@@ -166,7 +166,7 @@ listen('toggle', async message => {
 });
 
 listen('remove', async message => {
-  state.todos = state.todos.filter(i => i.id !== message.body.payload);
+  state.todos = state.todos.filter(i => i.id !== message.payload);
   return state;
 });
 
@@ -182,7 +182,7 @@ function create(id, name) {
 }
 
 (async function main() {
-  const todos = (await dispatch('get')).body.payload;
+  const todos = (await dispatch('get')).payload;
 
   await dispatch('add', create(0, 'foo'));
   await dispatch('add', create(1, 'bar'));
@@ -192,7 +192,7 @@ function create(id, name) {
   await dispatch('remove', 0);
   await dispatch('remove', 1);
 
-  const remainingTodos = (await dispatch('get')).body.payload;
+  const remainingTodos = (await dispatch('get')).payload;
 
   console.log(remainingTodos); // [{ id: 2, name: 'baz', completed: true }];
 })();

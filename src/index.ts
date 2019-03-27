@@ -5,19 +5,9 @@
  * @template T
  */
 export interface IMessage<T = unknown> {
-  body: IMessageBody<T>;
-  issuer: string;
-}
-
-/**
- *
- * @export
- * @interface IMessageBody
- * @template T
- */
-export interface IMessageBody<T> {
   payload: T;
   type: string;
+  issuer: string;
 }
 
 
@@ -41,16 +31,11 @@ export function createIssuer(eventType: string): string {
  * @memberof ComBus
  */
 export function createMessage<T>(issuer: string, type: string, payload: T): IMessage<T> {
-  const message = <IMessage<T>>{
+  return {
     issuer,
-  };
-
-  message.body = {
     payload,
     type,
-  }
-
-  return message;
+  };
 }
 
 /**
@@ -68,7 +53,7 @@ export function dispatch<TResponse>(eventType: string, payload?: any): Promise<I
 
   return new Promise(resolve => {
     const handler = (event: Event) => {
-      removeEventListener(eventType, handler);
+      removeEventListener(issuer, handler);
       resolve((event as CustomEvent<IMessage<TResponse>>).detail);
     }
 

@@ -5,26 +5,26 @@ describe(`Combus is a communication bus between modules or scripts`, () => {
     const eventType = 'test';
 
     combus.listen(eventType, async message => {
-      return message.body.payload as number + 5;
+      return message.payload as number + 5;
     });
 
     const result = await combus.dispatch(eventType, 5);
 
-    expect(result.body.payload).toBe(10);
+    expect(result.payload).toBe(10);
   });
 
   it(`Notifies only one dispatcher at a time`, async () => {
     const eventType = 'foo';
 
     combus.listen<string>(eventType, async message => {
-      return `Hello ${message.body.payload}`
+      return `Hello ${message.payload}`
     });
 
     const result1 = await combus.dispatch(eventType, 'I am 1');
     const result2 = await combus.dispatch(eventType, 'I am 2');
 
-    expect(result1.body.payload).toBe(`Hello I am 1`);
-    expect(result2.body.payload).toBe(`Hello I am 2`);
+    expect(result1.payload).toBe(`Hello I am 1`);
+    expect(result2.payload).toBe(`Hello I am 2`);
   });
 
   it('Expects that only the first defined listener will respond to a dispatcher', async () => {
@@ -40,7 +40,7 @@ describe(`Combus is a communication bus between modules or scripts`, () => {
 
     const result = await combus.dispatch(eventType);
 
-    expect(result.body.payload).toBe(1);
+    expect(result.payload).toBe(1);
     expect(mock).toHaveBeenCalled();
   });
 
@@ -64,13 +64,13 @@ describe(`Combus is a communication bus between modules or scripts`, () => {
     combus.listen<ITodo[]>('get', async () => state.todos);
 
     combus.listen<ITodo>('add', async message => {
-      state.todos.push(message.body.payload);
+      state.todos.push(message.payload);
       return state;
     });
 
     combus.listen<number>('toggle', async message => {
       state.todos.forEach(todo => {
-        if (todo.id !== message.body.payload) {
+        if (todo.id !== message.payload) {
           return;
         }
 
@@ -81,7 +81,7 @@ describe(`Combus is a communication bus between modules or scripts`, () => {
     });
 
     combus.listen<number>('remove', async message => {
-      state.todos = state.todos.filter(i => i.id !== message.body.payload);
+      state.todos = state.todos.filter(i => i.id !== message.payload);
       return state;
     });
 
@@ -93,7 +93,7 @@ describe(`Combus is a communication bus between modules or scripts`, () => {
     await combus.dispatch('remove', 0);
     await combus.dispatch('remove', 1);
 
-    const remainingTodos = (await combus.dispatch<ITodo[]>('get')).body.payload;
+    const remainingTodos = (await combus.dispatch<ITodo[]>('get')).payload;
 
     expect(remainingTodos[0].id).toBe(2);
     expect(remainingTodos[0].name).toBe('baz');
