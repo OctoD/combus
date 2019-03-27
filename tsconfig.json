@@ -17,6 +17,7 @@
     "target": "es5",
   },
   "exclude": [
+    "dist",
     "node_modules"
   ]
 }
