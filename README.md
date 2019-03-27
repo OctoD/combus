@@ -96,7 +96,7 @@ Promise.all([
     name: 'Foo2',
     args: [1, 2, 3, 4]
   }),
-]).then([fooMessage, foo2Message] => {
+]).then(([fooMessage, foo2Message]) => {
   const foo = fooMessage.payload;
   const foo2 = foo2Message.payload;
 
