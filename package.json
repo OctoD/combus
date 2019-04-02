@@ -2,7 +2,7 @@
   "name": "combus",
   "version": "1.0.0",
   "description": "Event based communication bus for JavaScript and TypeScript",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "tsc -p .",
     "test": "jest"
